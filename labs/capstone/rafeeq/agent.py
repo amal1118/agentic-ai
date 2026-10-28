@@ -76,10 +76,19 @@ evals.judge = _judge_fixed
 # ---------------------------------------------------------------- CAPSTONE: your agent's spec (system prompt)
 SPEC = madar.SYSTEM_PROMPT  # replace with Path("capstone/AGENTS.md").read_text() once you write your own spec
 
+# Config B changes ONE thing vs A (found by the error analysis of A): the prompt told the model to confirm every change
+# in chat, while the harness already asks a human to approve each write. 4 of A's 18 tasks stopped at that second question.
+_OLD = "Confirm what you are about to do before any change."
+_NEW = ("When the person clearly asks for one of these actions and you have verified them and have every detail, "
+        "call the tool right away: the harness shows the exact action to a human for approval before anything "
+        "changes, so do not ask the person to confirm again in chat. If a detail is missing, ask for it.")
+assert SPEC.count(_OLD) == 1
+SPEC_B = SPEC.replace(_OLD, _NEW)
+
 # Two configurations to compare in your eval (requirement 4): change ONE thing between them.
 CONFIGS = {
     "A": {"system": SPEC, "model": None},
-    "B": {"system": SPEC + "\nBefore any answer about fees or dates, call the tool that computes them.", "model": None},
+    "B": {"system": SPEC_B, "model": None},
 }
 
 MAX_STEPS, MAX_COST, MAX_RESULT_CHARS, MAX_HISTORY_MESSAGES = 8, 0.05, 3000, 24
