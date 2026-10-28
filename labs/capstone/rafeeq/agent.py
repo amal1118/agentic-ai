@@ -50,6 +50,29 @@ def _norm_folded(text: str) -> str:
 
 evals._norm = _norm_folded
 
+
+# GRADER FIX 2: the judge model (a reasoning model) spent all 300 tokens thinking and returned nothing.
+# Give it room, and report an empty verdict as a measurement error instead of a silent agent failure.
+JUDGE_MAX_TOKENS = 3000
+
+
+def _judge_fixed(rubric: str, prompt: str, reply: str, tools_used: list, model: str | None = None) -> dict:
+    user = (f"RUBRIC:\n{rubric}\n\nUSER MESSAGE:\n{prompt}\n\n"
+            f"TOOLS THE ASSISTANT CALLED: {tools_used or 'none'}\n\nREPLY:\n{reply}")
+    resp = K.chat([{"role": "system", "content": evals.JUDGE_PROMPT}, {"role": "user", "content": user}],
+                  model=model or K.SMALL_MODEL, temperature=0, max_tokens=JUDGE_MAX_TOKENS)
+    text = K.text_of(resp).strip()
+    if not text:
+        return {"pass": False, "reason": "JUDGE_ERROR: empty output (reasoning used all tokens)"}
+    try:
+        data = json.loads(text[text.find("{"): text.rfind("}") + 1])
+        return {"pass": bool(data.get("pass")), "reason": str(data.get("reason", ""))}
+    except (ValueError, AttributeError):
+        return {"pass": False, "reason": f"JUDGE_ERROR: unparseable: {text[:120]}"}
+
+
+evals.judge = _judge_fixed
+
 # ---------------------------------------------------------------- CAPSTONE: your agent's spec (system prompt)
 SPEC = madar.SYSTEM_PROMPT  # replace with Path("capstone/AGENTS.md").read_text() once you write your own spec
 
