@@ -37,6 +37,19 @@ import madar  # noqa: E402
 
 OUT = K.lab_dir("rafeeq")
 
+# GRADER FIX: models print dates with U+202F / U+2011; fold them to plain characters before matching.
+_FOLD = {"\u202f": " ", "\u00a0": " ", "\u2009": " ", "\u2011": "-", "\u2010": "-"}
+_norm_orig = evals._norm
+
+
+def _norm_folded(text: str) -> str:
+    for k, v in _FOLD.items():
+        text = (text or "").replace(k, v)
+    return _norm_orig(text)
+
+
+evals._norm = _norm_folded
+
 # ---------------------------------------------------------------- CAPSTONE: your agent's spec (system prompt)
 SPEC = madar.SYSTEM_PROMPT  # replace with Path("capstone/AGENTS.md").read_text() once you write your own spec
 
