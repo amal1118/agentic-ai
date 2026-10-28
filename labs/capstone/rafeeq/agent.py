@@ -137,9 +137,10 @@ def main() -> int:
             import pandas as pd
 
             df = pd.concat(frames)
-            df.drop(columns="final").to_csv(OUT / "eval.csv", index=False)
+            csv_path = OUT / f"eval_{'_'.join(args.config)}.csv"
+            df.to_csv(csv_path, index=False)
             overall, per_task = evals.report(df)
-            print("\n", overall, "\n\nper task written to", OUT / "eval.csv")
+            print("\n", overall, "\n\nper task written to", csv_path)
     return 0
 
 
