@@ -1,3 +1,5 @@
+> **Capstone submission (Track 1, Rafeeq in production):** [labs/capstone/rafeeq/README.md](labs/capstone/rafeeq/README.md)
+
 # Agentic AI Systems Engineering · هندسة أنظمة الذكاء الاصطناعي التوكيلي
 
 **SDAIA Academy · AI Engineering Track**: a 4-day hands-on bootcamp (4 sessions per day) plus a capstone presentation day. Build agents that work, and the systems around them: the three LLM API shapes and the agent loop, context engineering, harnesses, loops and graphs, then evaluation, security and production. Every lab runs on **free** open models through OpenRouter (and Hugging Face).
