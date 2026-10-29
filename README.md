@@ -1,8 +1,9 @@
 # Rafeeq in Production
 
+
 | | |
 |---|---|
-| **Student** | Amal Omar Al-Zahrani |
+| **Submitted by** | Amal Omar Al-Zahrani |
 | **Course** | Agentic AI Systems Engineering, SDAIA Academy (أكاديمية سدايا), Capstone |
 | **Course repository** | https://github.com/SDAIAAcademy/agentic-ai (this repository is my fork; the base code in `labs/` comes from the course) |
 | **Agent model** | `nvidia/nemotron-3-ultra-550b-a55b:free` via OpenRouter |
@@ -14,10 +15,10 @@
 2. [Problem](#2-problem)
 3. [What is verified and what is not](#3-what-is-verified-and-what-is-not)
 4. [How to run](#4-how-to-run)
-5. [Design](#5-design)
+5. [Design across the ladder](#5-design-across-the-ladder)
 6. [HTTP API and HTML interface](#6-http-api-and-html-interface)
 7. [Evaluation](#7-evaluation)
-8. [Security and governance](#8-security-and-governance)
+8. [Security note](#8-security-note)
 9. [Limitations and next steps](#9-limitations-and-next-steps)
 10. [Repository layout and tools used](#10-repository-layout-and-tools-used)
 
@@ -28,7 +29,7 @@
 | Area | Result | Where |
 |---|---|---|
 | Evaluation | 18 tasks, one run each. **A: 9/18** with the original graders, **13/18** after fixing two grader defects. **B: 16/18** | [Section 7](#7-evaluation) |
-| Security | Egress guard enforced in code. In a simulation with an always-obedient scripted model it blocks 2 of 3 attack scenarios. **Scenario 3 (applicant name only, sent to the sender) still gets through** | [Section 8](#8-security-and-governance) |
+| Security | Egress guard enforced in code. In a simulation with an always-obedient scripted model it blocks 2 of 3 attack scenarios. **Scenario 3 (applicant name only, sent to the sender) still gets through** | [Section 8](#8-security-note) |
 | HTTP API and HTML client | The course service, unchanged, plus a one-page client. Write actions are queued for an officer, never executed | [Section 6](#6-http-api-and-html-interface) |
 | Reproducibility | Fresh-clone smoke test passed (no model calls) | [Section 3](#3-what-is-verified-and-what-is-not) |
 
@@ -104,7 +105,7 @@ In Colab I started it with `python` in a subprocess and displayed it with `googl
 
 ---
 
-## 5. Design
+## 5. Design across the ladder
 
 ### Decisions
 
@@ -230,7 +231,7 @@ Root causes were assigned by me by reading the answers, not automatically.
 
 ---
 
-## 8. Security and governance
+## 8. Security note
 
 ### Trifecta
 
