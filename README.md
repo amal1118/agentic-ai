@@ -5,9 +5,13 @@
 |---|---|
 | **Submitted by** | Amal Omar Al-Zahrani |
 | **Course** | Agentic AI Systems Engineering, SDAIA Academy (أكاديمية سدايا), Capstone |
-| **Course repository** | https://github.com/SDAIAAcademy/agentic-ai (this repository is my fork; the base code in `labs/` comes from the course) |
+| **Course repository** | https://github.com/SDAIAAcademy/agentic-ai |
 | **Agent model** | `nvidia/nemotron-3-ultra-550b-a55b:free` via OpenRouter |
 | **Judge model** | `nvidia/nemotron-3.5-lightning:free` |
+
+## Where my work is
+
+My work is in one folder: `labs/capstone/rafeeq/`
 
 ## Contents
 
