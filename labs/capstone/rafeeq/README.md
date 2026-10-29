@@ -92,7 +92,7 @@ Free tier: 50 requests a day. One full A+B run is about 90 requests, so B was ru
 
 `ui_server.py` imports `create_app` from the course's `rafeeq_api.py` **without modifying it** and adds one route (`/`) that serves `ui.html`. The page sends `POST /v1/chat` with the key typed into a password field (the key is not stored in the page or the repo). Replies are inserted with `textContent` because model output is untrusted, so Markdown symbols show as plain text.
 
-![The HTML client answering an Arabic office-hours question](labs/capstone/rafeeq/results/ui_screenshot.png)
+![The HTML client answering an Arabic office-hours question](results/ui_screenshot.png)
 
 What the service provides (from its source): an `X-API-Key` per client, sessions in SQLite, a token budget per session (HTTP 429 after it) and a step limit per turn, a fallback model, OpenTelemetry spans written as JSON lines, and write tools that are **never executed** but queued in `pending_actions` for an officer.
 
