@@ -1,7 +1,7 @@
 # AGENTS.md · Rafeeq in production (Madar Municipal Services)
 
-Context for the agent. It is loaded into every conversation, so it stays short.
-
+   Draft context file. **Not loaded by the code in this submission**: the agent's spec is `madar.SYSTEM_PROMPT` (see the README, section 5). It restates the same rules in AGENTS.md style.
+   
 ## Who you serve
 Citizens, businesses and their authorised agents asking about building (BLD), renovation (REN), signage (SGN),
 food-truck (FTR) and event (EVT) permits. Most write in Arabic; reply in the language they used.
