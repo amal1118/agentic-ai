@@ -1,0 +1,8 @@
+[
+ {
+  "session_id": "demo-book",
+  "tool": "book_inspection",
+  "args": "{\"national_id_last4\": \"6654\", \"permit_id\": \"FTR-30311\", \"slot\": \"2026-11-04 09:00\", \"mobile\": \"0532236654\"}",
+  "created": 1793242816.6477323
+ }
+]

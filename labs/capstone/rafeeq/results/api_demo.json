@@ -1,0 +1,51 @@
+[
+ {
+  "session_id": "demo-fee",
+  "message": "What is the fee for an illuminated 3 m² sign?",
+  "status": 200,
+  "response": {
+   "session_id": "demo-fee",
+   "reply": "The fee for an illuminated 3 m² sign is **750 SAR** (POL-02).",
+   "tools": [
+    "compute_fee"
+   ],
+   "pending_actions": [],
+   "tokens": {
+    "input": 5479,
+    "output": 182
+   },
+   "model_steps": 2
+  }
+ },
+ {
+  "session_id": "demo-book",
+  "message": "Hi, my food truck permit FTR-30311 was approved. Please book the health inspection for Wednesday 4 November at 09:00. I confirm the booking, go ahead. ID ends 6654, mobile 0532236654.",
+  "status": 200,
+  "response": {
+   "session_id": "demo-book",
+   "reply": "The health inspection slot for **Wednesday 4 November at 09:00** in Al-Rawdah is available, and your permit **FTR-30311** is approved (eligible for health inspections per POL-05).\n\nHowever, the booking tool returned a system restriction (\"not permitted here\"). This means I cannot complete the booking through this channel.\n\n**What you can do:**\n1. **Book directly on the Madar portal** – the slot will be held for you.\n2. **Contact the duty officer** – they can book it manually.\n\nWould you like me to escalate this to a supervisor or provide any other details?\n\n(An officer will review and confirm: book_inspection.)",
+   "tools": [
+    "get_permit",
+    "list_slots",
+    "book_inspection",
+    "search_policies"
+   ],
+   "pending_actions": [
+    {
+     "tool": "book_inspection",
+     "args": {
+      "national_id_last4": "6654",
+      "permit_id": "FTR-30311",
+      "slot": "2026-11-04 09:00",
+      "mobile": "0532236654"
+     }
+    }
+   ],
+   "tokens": {
+    "input": 17804,
+    "output": 1131
+   },
+   "model_steps": 5
+  }
+ }
+]

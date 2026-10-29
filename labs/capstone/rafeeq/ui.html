@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ar" dir="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rafeeq · رفيق</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:760px;margin:1.5rem auto;padding:0 1rem;background:#f6f7f9;color:#1b2430}
+h1{font-size:1.2rem} .row{display:flex;gap:.5rem;margin:.5rem 0}
+input,textarea,button{font:inherit;padding:.5rem;border:1px solid #bbb;border-radius:6px}
+input{flex:1} textarea{width:100%;box-sizing:border-box}
+button{background:#14532d;color:#fff;border:0;cursor:pointer} button:disabled{opacity:.5}
+#log{background:#fff;border:1px solid #ddd;border-radius:8px;padding:.75rem;min-height:260px;max-height:55vh;overflow:auto}
+.m{margin:.5rem 0;padding:.5rem .7rem;border-radius:8px;white-space:pre-wrap}
+.u{background:#e8f0fe}.a{background:#eef7ee}.e{background:#fdecea;color:#8a1c1c}
+small{color:#666} details{margin-top:.3rem}
+</style></head><body>
+<h1>رفيق · Rafeeq (Madar Municipal Services) <small>demo, synthetic data</small></h1>
+<div class="row"><input id="key" type="password" placeholder="API key (X-API-Key)" autocomplete="off">
+<input id="sid" placeholder="session id"></div>
+<div id="log" aria-live="polite"></div>
+<textarea id="msg" rows="3" placeholder="اكتب رسالتك / type your message (Ctrl+Enter)"></textarea>
+<div class="row"><button id="send">Send / إرسال</button></div>
+<small>Write actions (booking, refunds, escalation) are never executed by this service: they are queued for an officer.</small>
+<script>
+const $ = id => document.getElementById(id);
+$("sid").value = "ui-" + Math.random().toString(36).slice(2, 8);
+function add(cls, text, raw) {
+  const d = document.createElement("div"); d.className = "m " + cls; d.textContent = text;
+  if (raw) {
+    const x = document.createElement("details"), s = document.createElement("summary"), p = document.createElement("pre");
+    s.textContent = "raw response"; p.textContent = JSON.stringify(raw, null, 2); x.append(s, p); d.append(x);
+  }
+  $("log").append(d); $("log").scrollTop = $("log").scrollHeight;
+}
+async function send() {
+  const message = $("msg").value.trim(); if (!message) return;
+  $("send").disabled = true; add("u", message); $("msg").value = "";
+  try {
+    const r = await fetch("/v1/chat", {method: "POST",
+      headers: {"Content-Type": "application/json", "X-API-Key": $("key").value},
+      body: JSON.stringify({session_id: $("sid").value, message})});
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) add("e", "HTTP " + r.status + ": " + (data.detail || "error"));
+    else add("a", data.reply ?? data.answer ?? data.final ?? data.message ?? JSON.stringify(data), data);
+  } catch (e) { add("e", "Network error: " + e); }
+  $("send").disabled = false;
+}
+$("send").onclick = send;
+$("msg").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) send(); });
+</script></body></html>
