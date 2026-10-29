@@ -4,8 +4,7 @@
 | | |
 |---|---|
 | **Submitted by** | Amal Omar Al-Zahrani |
-| **Course** | Agentic AI Systems Engineering, SDAIA Academy (أكاديمية سدايا), Capstone |
-| **Course repository** | https://github.com/SDAIAAcademy/agentic-ai |
+| **Course** |[Advanced Agentic AI Systems Engineering - SDAIA Academy](https://github.com/sdaiaacademy/agentic-ai/)|
 | **Agent model** | `nvidia/nemotron-3-ultra-550b-a55b:free` via OpenRouter |
 | **Judge model** | `nvidia/nemotron-3.5-lightning:free` |
 
