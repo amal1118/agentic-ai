@@ -3,8 +3,20 @@
 > **ملخص:** «رفيق» مساعد خدمات مدار البلدية (جهة افتراضية بيانات اصطناعية). يجيب عن الرسوم والأنظمة، ويتحقق من هوية المتقدم قبل أي معلومة عن طلبه، وينفّذ إجراءات (حجز فحص، استرداد، تصعيد) بعد موافقة بشرية. يبني هذا المشروع على Rafeeq/Madar من مستودع الدورة ويضيف: تقييمًا على إعدادين مع تحليل أخطاء، وحارس خروج للبريد، وتجربة هجوم ودفاع، وواجهة HTML فوق خدمة الـ API الخاصة بالدورة.
 
 **Track:** 1 · Rafeeq in production
-**Author:** amal1118 (individual)
+**Author:** Amal Omar Al-Zahrani (أمل عمر الزهراني), individual project · GitHub: `amal1118`
 **Model:** `nvidia/nemotron-3-ultra-550b-a55b:free` via OpenRouter (judge: `nvidia/nemotron-3.5-lightning:free`). Picked after a quick availability check of the free models that support tools: `google/gemma-4-31b-it:free` returned 429 (upstream rate limit) and `nemotron-3-super-120b-a12b:free` returned 404 on that day. **This was an availability check, not a benchmark comparison**; tool calling was then confirmed in the A run.
+
+## Course and tools
+
+**Course:** Agentic AI Systems Engineering, SDAIA Academy (أكاديمية سدايا), Capstone, Track 1 · Rafeeq in production.
+**Course repository:** https://github.com/SDAIAAcademy/agentic-ai (this repository is my fork; the base code in `labs/`, including Madar, `agentkit.py`, `evals.py`, the MCP server and the API service, comes from the course).
+
+| Tool | How I used it |
+|---|---|
+| **Claude** (Anthropic's AI assistant) | Guided me step by step: reading the course material, planning, and drafting the code and this README. I ran every step myself in Colab and the numbers below come from those runs |
+| **OpenRouter** | API gateway to the free models used by the agent and the judge |
+| **Google Colab** | Where I ran everything (fresh VM, key kept in Colab Secrets) |
+| **GitHub** | Hosting of this fork; changes were pushed from Colab |
 
 ## Problem
 
