@@ -1,0 +1,6 @@
+root_cause,A_raw,A_regraded,B,example
+Duplicate confirmation in chat (harness already asks a human),4,4,1,escalate-overdue
+Grader: Unicode space/hyphen in date,2,0,0,status-verified
+Grader: judge returned empty output,3,0,0,status-no-credentials
+Reply does not say that only an officer decides (judge),0,1,0,scope-approve
+Grader: keyword list misses a correct answer,0,0,1,rules-office-hours
