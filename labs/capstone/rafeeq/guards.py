@@ -1,7 +1,8 @@
-"""Egress guard for Rafeeq, enforced in code (a before_tool hook): it does not depend on the model obeying.
+"""Egress guard for Rafeeq, enforced in code: it does not depend on the model obeying.
 
 Adapted from Lab 4.3 (labs/_src/D4_3_security.py). Differences: it fails closed when the harness has not set a
-recipient, it also scans the subject, it matches link hosts exactly, and it logs every block.
+recipient, scans the subject too, matches link hosts exactly, understands Arabic digits and spaced or hyphenated
+numbers, and logs every block.
 """
 from __future__ import annotations
 
@@ -14,6 +15,10 @@ ID_RE = re.compile(r"\b[12]\d{9}\b")                    # a 10-digit national ID
 MOBILE_RE = re.compile(r"(?:\+966|00966|0)?5\d{8}\b")    # a Saudi mobile number
 LINK_RE = re.compile(r"https?://([^/\s)]+)")
 ALLOWED_HOST = "madar.example"
+
+_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩۰۱۲۳۴۵۶۷۸۹", "0123456789" * 2)
+_ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+_DIGIT_RUN = re.compile(r"\d(?:[\s\-.]?\d){9,}")
 
 # Set by the HARNESS, never by the model: the only address this conversation may email.
 CONTEXT: dict = {"recipient": None}
@@ -33,6 +38,18 @@ def _bad_host(host: str) -> bool:
     return not (host == ALLOWED_HOST or host.endswith("." + ALLOWED_HOST))
 
 
+def has_personal_number(text: str) -> bool:
+    """A national ID or mobile number, also in Arabic digits or split by spaces, dots or hyphens."""
+    t = _ISO_DATE.sub("DATE", text.translate(_DIGITS))     # ISO dates are not IDs
+    if ID_RE.search(t) or MOBILE_RE.search(t):
+        return True
+    for run in _DIGIT_RUN.findall(t):
+        d = re.sub(r"[\s\-.]", "", run)
+        if re.fullmatch(r"[12]\d{9}", d) or MOBILE_RE.search(d):
+            return True
+    return False
+
+
 def egress_guard(name: str, args: dict):
     """before_tool hook: return a JSON error string to block the call, or None to let it run."""
     if name != "send_email":
@@ -45,7 +62,7 @@ def egress_guard(name: str, args: dict):
         reasons.append("no recipient is authorised for this conversation")
     elif to != allowed:
         reasons.append("reply only to the authorised recipient")
-    if ID_RE.search(text) or MOBILE_RE.search(text):
+    if has_personal_number(text):
         reasons.append("no national IDs or mobile numbers in emails")
     if any(_bad_host(h) for h in LINK_RE.findall(text)):
         reasons.append("links only to madar.example")
